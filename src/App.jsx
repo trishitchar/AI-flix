@@ -1,7 +1,8 @@
 import './App.css'
+import Body from './components/Body'
 function App() {
   return (
-    <div className='bg-yellow-300'>hii</div>
+    <Body/>
   ) 
 }
 
