@@ -1,3 +1,4 @@
+"use client"
 import React, { useRef, useState } from 'react';
 import Header from './Header';
 import bg from '../assets/background_flix.jpg';
@@ -33,7 +34,7 @@ const Login = () => {
   };
 
   return (
-    <div className='relative w-full h-screen overflow-hidden text-white'>
+    <div className='relative w-full h-screen overflow-hidden '>
       <Header />
       <div className='absolute top-0 left-0 w-full h-full flex justify-center items-center'>
         <form onSubmit={(e) => e.preventDefault()} className='flex flex-col justify-center items-center bg-black bg-opacity-70 p-8 rounded-lg z-10 sm:m-2'>
@@ -46,7 +47,7 @@ const Login = () => {
               type='text'
               ref={nameRef}
               placeholder='Enter your name'
-              className='p-2 m-2 border border-gray-300 rounded-lg outline-none w-80'
+              className='p-2 m-2 border border-gray-300 rounded-lg outline-none w-80 '
             />
           )}
           <input
