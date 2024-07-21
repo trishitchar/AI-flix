@@ -1,86 +1,85 @@
 "use client"
 import React, { useRef, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from "firebase/auth";
 import Header from './Header';
 import bg from '../assets/background_flix.jpg';
 import { checkValidDataSignIn, checkValidDataSignUp } from '../utils/validate';
 import { auth } from "../utils/firebase";
-import {createUserWithEmailAndPassword,signInWithEmailAndPassword,updateProfile } from "firebase/auth";
-
+import { addUser } from '../utils/userSlice';
 
 const Login = () => {
   const nameRef = useRef(null);
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
-  const [signUp, setSignUp] = useState(false);
-  const [validateMsg, setValidateMsg] = useState(null);
+  const [isSignUp, setIsSignUp] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(null);
+  const dispatch = useDispatch();
 
-  const toggleSignUp = () => {
-    setSignUp(!signUp);
+  const toggleSignUp = () => setIsSignUp(!isSignUp);
+
+  //signIn
+  const handleSignIn = async (e) => {
+    e.preventDefault();
+    const email = emailRef.current.value;
+    const password = passwordRef.current.value;
+
+    const message = checkValidDataSignIn(email, password);
+    if (message) {
+      setErrorMessage(message);
+      return;
+    }
+
+
+    //if no error, signin with google
+    try {
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      console.log(userCredential.user);
+    } catch (error) {
+      setErrorMessage(`${error.code}: ${error.message}`);
+    }
   };
 
-  //signin logic
-  const handleSignIn = () => {
-    const message = checkValidDataSignIn(emailRef.current.value, passwordRef.current.value);
-    setValidateMsg(message);
-    if (message) return;
-    
-    //if no error proceed
-    signInWithEmailAndPassword(auth, emailRef.current.value, passwordRef.current.value)
-    .then((userCredential) => {
-      const user = userCredential.user;
-      console.log(user);
-    })
-    .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      setValidateMsg(`${errorCode} and ${errorMessage}`);
-    });
-  };
-  
   //signup logic
-  const handleSignUp = () => {
-    const message2 = checkValidDataSignUp(
-      nameRef.current.value,
-      emailRef.current.value,
-      passwordRef.current.value
-    );
-    setValidateMsg(message2);
-    if (message2) return;
-  
-    //if no error proceed
-    createUserWithEmailAndPassword(auth, emailRef.current.value, passwordRef.current.value)
-    .then((userCredential) => {
-      const user = userCredential.user;
-      console.log(user);
-      // update for name and it's resolve a promise
-      updateProfile(auth.currentUser, {
-        displayName: nameRef.current.value
-      }).then(()=>{
-        console.log("Display Name updated successfully.");
-      })
-    })
-    .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      setValidateMsg(`${errorCode} and ${errorMessage}`);
-    });
-};
+  const handleSignUp = async (e) => {
+    e.preventDefault();
+    const name = nameRef.current.value;
+    const email = emailRef.current.value;
+    const password = passwordRef.current.value;
+
+    const message = checkValidDataSignUp(name, email, password);
+    if (message) {
+      setErrorMessage(message);
+      return;
+    }
+
+    //if no error signup with google
+    try {
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      await updateProfile(auth.currentUser, { displayName: name });
+      const { uid, email: userEmail, displayName } = auth.currentUser;
+      dispatch(addUser({ uid, email: userEmail, displayName }));
+    } catch (error) {
+      setErrorMessage(`${error.code}: ${error.message}`);
+    }
+  };
 
   return (
-    <div className='relative w-full h-screen overflow-hidden '>
+    <div className='relative w-full h-screen overflow-hidden'>
       <Header />
-      <div className='absolute top-0 left-0 w-full h-full flex justify-center items-center'>
-        <form onSubmit={(e) => e.preventDefault()} className='flex flex-col justify-center items-center bg-black bg-opacity-70 p-8 rounded-lg z-10 sm:m-2'>
-          <h1 className="font-bold text-3xl py-4 text-white justify-start">
-            {!signUp ? "Sign In" : "Sign Up"}
+      <div className='absolute inset-0 flex justify-center items-center'>
+        <form onSubmit={isSignUp ? handleSignUp : handleSignIn} className='flex flex-col justify-center items-center bg-black bg-opacity-70 p-8 rounded-lg z-10 sm:m-2'>
+          <h1 className="font-bold text-3xl py-4 text-white">
+            {isSignUp ? 'Sign Up' : 'Sign In'}
           </h1>
-          {validateMsg && <p className="text-red-500">{validateMsg}</p>}
-          {signUp && (
+          {errorMessage && <p className="text-red-500">{errorMessage}</p>}
+          {isSignUp && (
             <input
               type='text'
               ref={nameRef}
               placeholder='Enter your name'
-              className='p-2 m-2 border border-gray-300 rounded-lg outline-none w-80 '
+              className='p-2 m-2 border border-gray-300 rounded-lg outline-none w-80'
+              required
             />
           )}
           <input
@@ -88,33 +87,25 @@ const Login = () => {
             ref={emailRef}
             placeholder='Enter your email'
             className='p-2 m-2 border border-gray-300 rounded-lg outline-none w-80'
+            required
           />
           <input
             type='password'
             ref={passwordRef}
             placeholder='Enter your password'
             className='p-2 m-2 border border-gray-300 rounded-lg outline-none w-80'
+            required
           />
-          {signUp ? (
-            <button onClick={handleSignUp} className='bg-red-600 text-white m-2 p-2 rounded-md shadow-md w-80 hover:bg-red-700 focus:outline-none'>
-              Sign Up
-            </button>
-          ) : (
-            <button onClick={handleSignIn} className='bg-red-600 text-white m-2 p-2 rounded-md shadow-md w-80 hover:bg-red-700 focus:outline-none'>
-              Sign In
-            </button>
-          )}
+          <button type='submit' className='bg-red-600 text-white m-2 p-2 rounded-md shadow-md w-80 hover:bg-red-700 focus:outline-none'>
+            {isSignUp ? 'Sign Up' : 'Sign In'}
+          </button>
           <button type='button' onClick={toggleSignUp} className='text-blue-500 hover:underline mt-2'>
-            {!signUp ? "Don't have an account? Sign Up" : "Already have an account? Sign In"}
+            {isSignUp ? 'Already have an account? Sign In' : "Don't have an account? Sign Up"}
           </button>
         </form>
       </div>
-      <div className="absolute top-0 left-0 w-full h-full">
-        <img
-          className="object-cover w-full h-full brightness-50"
-          alt="background"
-          src={bg}
-        />
+      <div className='absolute inset-0'>
+        <img className='object-cover w-full h-full brightness-50' alt='background' src={bg} />
       </div>
     </div>
   );
