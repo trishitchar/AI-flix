@@ -2,8 +2,9 @@ import React from 'react'
 
 const Browse = () => {
   return (
-    <div>Browse
-      <Header/>
+    <div>
+      Browse
+      {/* <Header/> */}
     </div>
   )
 }

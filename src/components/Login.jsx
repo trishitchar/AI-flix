@@ -3,6 +3,9 @@ import React, { useRef, useState } from 'react';
 import Header from './Header';
 import bg from '../assets/background_flix.jpg';
 import { checkValidDataSignIn, checkValidDataSignUp } from '../utils/validate';
+import { auth } from "../utils/firebase";
+import {createUserWithEmailAndPassword,signInWithEmailAndPassword,updateProfile } from "firebase/auth";
+
 
 const Login = () => {
   const nameRef = useRef(null);
@@ -15,13 +18,26 @@ const Login = () => {
     setSignUp(!signUp);
   };
 
+  //signin logic
   const handleSignIn = () => {
     const message = checkValidDataSignIn(emailRef.current.value, passwordRef.current.value);
     setValidateMsg(message);
     if (message) return;
-    // Handle sign-in logic here
+    
+    //if no error proceed
+    signInWithEmailAndPassword(auth, emailRef.current.value, passwordRef.current.value)
+    .then((userCredential) => {
+      const user = userCredential.user;
+      console.log(user);
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      setValidateMsg(`${errorCode} and ${errorMessage}`);
+    });
   };
-
+  
+  //signup logic
   const handleSignUp = () => {
     const message2 = checkValidDataSignUp(
       nameRef.current.value,
@@ -30,8 +46,25 @@ const Login = () => {
     );
     setValidateMsg(message2);
     if (message2) return;
-    // Handle sign-up logic here
-  };
+  
+    //if no error proceed
+    createUserWithEmailAndPassword(auth, emailRef.current.value, passwordRef.current.value)
+    .then((userCredential) => {
+      const user = userCredential.user;
+      console.log(user);
+      // update for name and it's resolve a promise
+      updateProfile(auth.currentUser, {
+        displayName: nameRef.current.value
+      }).then(()=>{
+        console.log("Display Name updated successfully.");
+      })
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      setValidateMsg(`${errorCode} and ${errorMessage}`);
+    });
+};
 
   return (
     <div className='relative w-full h-screen overflow-hidden '>
