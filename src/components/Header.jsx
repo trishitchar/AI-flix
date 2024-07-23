@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import logo from '../assets/logo.png';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -37,17 +37,15 @@ const Header = () => {
   };
 
   return (
-    <div className='bg-gradient-to-b from-black absolute w-full z-50 flex justify-between overflow-hidden items-center lg:px-10 md:px-10 sm:px-8 px-4'>
-      <img className='lg:w-48 sm:w-28 w-20 md:w-40 md:py-6 py-4 lg:py-6' src={logo} alt='AIFLIX logo' />
+    <div className="fixed top-0 left-0 right-0 z-50 flex justify-between items-center px-4 py-2 transition duration-300 ease-in-out bg-gradient-to-b from-black to-transparent">
+      <img className="w-24 md:w-40 lg:w-48" src={logo} alt='AIFLIX logo' />
       {user && (
-        <>
-          <button
-            className='text-white hidden md:block lg:text-base md:text-base font-normal hover:opacity-80 py-1 px-1 rounded-md mr-2.5 bg-zinc-700'
-            onClick={handleSignOut}
-          >
-            Sign Out
-          </button>
-        </>
+        <button
+          className=' text-white hidden md:block lg:text-base md:text-base font-normal hover:opacity-80 py-1 px-1 rounded-md mr-2.5 bg-zinc-700'
+          onClick={handleSignOut}
+        >
+          Sign Out
+        </button>
       )}
     </div>
   );
