@@ -37,11 +37,11 @@ const Header = () => {
   };
 
   return (
-    <div className="fixed top-0 left-0 right-0 z-50 flex justify-between items-center px-4 py-2 transition duration-300 ease-in-out bg-gradient-to-b from-black to-transparent">
+    <div className="fixed top-0 left-0 right-0 z-50 flex justify-between items-center px-4 py-2 transition duration-300 ease-in-out bg-gradient-to-b from-black to-transparent overflow-hidden">
       <img className="w-24 md:w-40 lg:w-48" src={logo} alt='AIFLIX logo' />
       {user && (
         <button
-          className=' text-white hidden md:block lg:text-base md:text-base font-normal hover:opacity-80 py-1 px-1 rounded-md mr-2.5 bg-zinc-700'
+          className='text-white hidden md:block lg:text-base md:text-base font-normal hover:opacity-80 py-1 px-1 rounded-md mr-2.5 bg-zinc-700 hover:bg-red-500 transition-opacity'
           onClick={handleSignOut}
         >
           Sign Out
