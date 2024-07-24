@@ -1,9 +1,20 @@
 import React from 'react'
+import MovieList from './MovieList'
+import { useSelector } from 'react-redux'
+import ShimmerUi from './ShimmerUi';
 
 const SecondaryContainer = () => {
-  return (
-    <div>SecondaryContainer</div>
-  )
-}
+  const movies = useSelector((store) => store?.movies);
 
-export default SecondaryContainer
+  if (!movies || !movies.nowPlayingMovies) return <ShimmerUi />;
+
+  return (
+    <div className="bg-black">
+      <div>
+        <MovieList title={'Now Playing'} movie={movies.nowPlayingMovies} />
+      </div>
+    </div>
+  );
+};
+
+export default SecondaryContainer;
