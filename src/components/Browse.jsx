@@ -4,10 +4,12 @@ import  useNowPlayingMovies  from '../hooks/useNowPlayingMovies';
 import MainContainer from './MainContainer';
 import SecondaryContainer from './SecondaryContainer';
 import usePopular from '../hooks/usePopular';
+import useTopRated from '../hooks/useTopRated';
 
 const Browse = () => {
   useNowPlayingMovies();
   usePopular();
+  useTopRated();
   return (
     <div className="bg-black min-h-screen">
       <Header />
