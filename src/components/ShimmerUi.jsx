@@ -2,7 +2,7 @@ import React from 'react'
 
 const ShimmerUi = () => {
   return (
-    <div>ShimmerUi</div>
+    <div className='text-white'>ShimmerUi</div>
   )
 }
 
