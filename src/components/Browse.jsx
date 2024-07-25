@@ -7,7 +7,7 @@ import usePopular from '../hooks/usePopular';
 
 const Browse = () => {
   useNowPlayingMovies();
-  usePopular()
+  usePopular();
   return (
     <div className="bg-black min-h-screen">
       <Header />
