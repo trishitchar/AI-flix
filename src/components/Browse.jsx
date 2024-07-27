@@ -15,7 +15,8 @@ const Browse = () => {
   usePopular();
   useTopRated();
   useUpcoming();
-
+  
+  // to switch between movies and gpt search page
   const showGptSearchView = useSelector((store) => store.gpt.gptSearchViewToggle);
 
   return (

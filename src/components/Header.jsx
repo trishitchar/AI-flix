@@ -10,6 +10,8 @@ const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
+  
+  // to change the text gpt search and aiflix
   const showGptSearchView = useSelector((store) => store.gpt.gptSearchViewToggle);
 
   useEffect(() => {
