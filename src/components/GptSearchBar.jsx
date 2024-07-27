@@ -4,13 +4,14 @@ import useGeminiResult from '../hooks/useGeminiSearch';
 
 const GptSearchBar = () => {
   const inputRef = useRef();
-  const { loading, error, recommendations, searchMovies } = useGeminiResult();
+  const {error, recommendations, searchMovies } = useGeminiResult();
 
-  const handleSearch = (e) => {
+  const handleSearch = async (e) => {
     e.preventDefault();
     const query = inputRef.current.value;
     if (query) {
-      searchMovies(query);
+      const data = await searchMovies(query);
+      if(!data) return <ShimmerUi/>
     }
   };
 
@@ -31,7 +32,6 @@ const GptSearchBar = () => {
         </button>
       </form>
 
-      {loading && <ShimmerUi />}
       {error && <div className="text-red-500">{error}</div>}
       {recommendations && <div className="mt-4">{recommendations}</div>}
     </div>

@@ -1,19 +1,26 @@
 import { useState } from 'react';
-import {REACT_APP_GEMINI} from '../utils/constants'
+import { REACT_APP_GEMINI } from '../utils/constants';
 import { GoogleGenerativeAI } from "@google/generative-ai";
+import { HarmBlockThreshold, HarmCategory} from "@google/generative-ai";
 
 const useGeminiResult = () => {
-  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [recommendations, setRecommendations] = useState('');
 
   const searchMovies = async (query) => {
-    setLoading(true);
     setError(null);
+    setRecommendations('');
 
     try {
       const genAI = new GoogleGenerativeAI(REACT_APP_GEMINI);
-      const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+      
+      const safetySetting = [
+        {
+          category: HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT,
+          threshold: HarmBlockThreshold.BLOCK_NONE,
+        },
+      ];
+      const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" , safetySetting});
 
       const prompt = `Act as a movie recommendation system and suggest some movies for the query "${query}". Only give me names of 5 movies, comma-separated like the example result given ahead. Example Result: Hera Pheri, 3 Idiots, Hulk, Dunki, Red`;
 
@@ -26,12 +33,10 @@ const useGeminiResult = () => {
       }
     } catch (err) {
       setError('Failed to fetch recommendations. Please try again.');
-    } finally {
-      setLoading(false);
     }
   };
 
-  return { loading, error, recommendations, searchMovies };
+  return { error, recommendations, searchMovies };
 };
 
 export default useGeminiResult;
