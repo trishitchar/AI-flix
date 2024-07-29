@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { REACT_APP_GEMINI } from '../utils/constants';
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { HarmBlockThreshold, HarmCategory} from "@google/generative-ai";
+import useTmdbMovieSearch from './useTmdbMovieSearch';
 
 const useGeminiResult = () => {
   const [error, setError] = useState(null);
@@ -35,7 +36,7 @@ const useGeminiResult = () => {
       setError('Failed to fetch recommendations. Please try again.');
     }
   };
-
+  useTmdbMovieSearch(recommendations);
   return { error, recommendations, searchMovies };
 };
 

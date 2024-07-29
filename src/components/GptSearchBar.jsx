@@ -33,7 +33,7 @@ const GptSearchBar = () => {
       </form>
 
       {error && <div className="text-red-500">{error}</div>}
-      {recommendations && <div className="mt-4">{recommendations}</div>}
+      {/* {recommendations && <div className="mt-4">{recommendations}</div>} */}
     </div>
   );
 };
