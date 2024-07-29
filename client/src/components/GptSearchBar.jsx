@@ -43,7 +43,7 @@ const GptSearchBar = () => {
         </div>
 
         {error && (
-          <div className="text-red-500 mt-4 text-center block z-10 bg-black m-2 p-3">
+          <div className="text-red-500 mt-4 text-center z-50 bg-black m-2 p-3">
             ⚠️ Alert: Horny user detected. This may help you: <button onClick={sendtopom} className="font-bold hover:underline hover:text-blue-600">NSFW</button>
           </div>
         )}
