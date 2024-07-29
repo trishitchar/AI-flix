@@ -12,16 +12,23 @@ const GptSearchResults = () => {
   // }
 
   return (
-    <div className="xl:px-16 md:px-8 sm:px-4 px-1.5 lg:px-12 ">
+    <div className="xl:px-16 md:px-8 sm:px-4 px-1.5 lg:px-12 flex flex-wrap ">
       {movieResult?.map((movie, index) => (
-        <div key={movie.id} className="mb-4">
-          <h3 className="text-lg font-semibold">{movie.title}</h3>
+        <div key={movie.id} className="mb-4 p-3">
           {movie.poster_path && (
+            <>
+              <span className="text-lg font-semibold text-gray-300 hidden md:block lg:text-xl md:text-sm">
+                {movie.title?.length > 18 ? `${movie.title.slice(0, 18)}...` : movie.title}
+              </span>
+              <span className="text-gray-300 md:hidden sm:text-sm text-xs">
+                {movie.title?.length > 12 ? `${movie.title.slice(0, 12)}...` : movie.title}
+              </span>
             <img
               src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
               alt={movie.title}
               className="w-32 h-auto mt-2"
-            />
+              />
+              </>
           )}
         </div>
       ))}
