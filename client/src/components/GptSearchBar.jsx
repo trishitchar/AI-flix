@@ -32,7 +32,7 @@ const GptSearchBar = () => {
         </button>
       </form>
 
-      {error && <div className="text-red-500">{error}</div>}
+      {error && <div className="text-red-500">⚠️ ALert: Horny user detected. This may help you: <a className="font-bold hover:underline hover:text-blue-600"href='https://pom-pom-beta.vercel.app' target='_blank'>NSFW</a></div>}
       {/* {recommendations && <div className="mt-4">{recommendations}</div>} */}
     </div>
   );
