@@ -13,5 +13,4 @@
     maybe a share button to share over users who joined the site just like I'm sharing my recomendation
     an qr code to share the site quickly 
     a user can upload a video/youtube url and image poster for a movie or he can request a movie
-# so far build
-    - updated Body using createBrowserRouter and RouterProvider
+
