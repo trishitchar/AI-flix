@@ -14,3 +14,12 @@
     an qr code to share the site quickly 
     a user can upload a video/youtube url and image poster for a movie or he can request a movie
 
+# backend 
+    server
+    -express
+    -mongo
+    -mongoose
+    -nodemon
+    -dotenv
+    -bcrypt -jwt - cookie-parser
+
