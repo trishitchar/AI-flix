@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import logo from '../assets/logo.png';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { auth } from '../utils/firebase';
 import { addUser, removeUser } from '../utils/userSlice';
 import { addGptSearchViewToggle } from '../utils/gptSlice';
+import axios from 'axios';
+import { USER_API_END_POINT } from '../utils/constants';
 
 const Header = () => {
   const navigate = useNavigate();
@@ -27,17 +28,29 @@ const Header = () => {
     //   }
     // });
     // return () => unsubscribe();
-  }, [dispatch, navigate]);
+    if (user) {
+      if(window.location.pathname === '/') {
+        navigate('/browse');
+      }
+    }else{
+      navigate('/');
+    }
+  }, [user, navigate]);
 
   const handleSignOut = async () => {
     try {
-      await auth.signOut();
-      dispatch(removeUser());
-      navigate('/');
+        const response = await axios.get(`${USER_API_END_POINT}/logout`, { withCredentials: true });
+        if (response.data.success) {
+            dispatch(removeUser()); 
+            navigate('/'); 
+        } else {
+            console.error('Sign out failed:', response.data.message);
+        }
     } catch (error) {
-      console.error('Error signing out: ', error);
+        console.error('Error signing out: ', error);
     }
-  };
+};
+
 
   const handleGptSearchClick = () => {
     dispatch(addGptSearchViewToggle());
