@@ -11,7 +11,8 @@ const app = express();
 dbConnection();
 
 const corsAllowOrigin = {
-  origin:'https://ai-flix.onrender.com',
+  origin:'http://localhost:5173',
+  // origin:'https://ai-flix.onrender.com',
   credentials: true
 };
 app.use(cors(corsAllowOrigin));
