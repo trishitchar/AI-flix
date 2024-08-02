@@ -12,6 +12,7 @@ export const API_OPTIONS = {
 
   export const REACT_APP_GEMINI = "AIzaSyC4D2fa6J7dPiF06yA8N2oeZYNECLCMJD0"
 
+  // if you're using it on localhost then comment the render url
   // export const USER_API_END_POINT = "http://localhost:8080/api/user"
   export const USER_API_END_POINT = "https://ai-flix-api.onrender.com/"
 
