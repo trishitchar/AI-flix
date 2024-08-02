@@ -17,7 +17,7 @@ const GptSearchResults = () => {
 
   return (
     <div className="xl:px-16 md:px-8 sm:px-4 px-1.5 lg:px-12 flex flex-wrap ">
-      {movieResult.map((movie) => (
+      {movieResult?.map((movie) => (
         <div
           key={movie.id}
           className="mb-4 p-3 hover:cursor-pointer hover:scale-110"

@@ -50,8 +50,12 @@ const Header = () => {
     setIsMenuOpen(prevState => !prevState);
   }
 
-  const GoToHomePage = () => {
+  const GoToHomePage = async() => {
     navigate('/');
+  }
+
+  const goToPrifile = async() =>{
+    navigate('/profile');
   }
 
   return (
@@ -69,8 +73,9 @@ const Header = () => {
             {isMenuOpen ? 'X' : '☰'}
           </button>
           <div className={`md:flex ${isMenuOpen ? 'flex flex-col absolute top-full right-0 bg-black p-4' : 'hidden'}`}>
-            <button className='text-white font-bold'>
-              <p>{`welocome ${user.name}`}</p>
+            <button className="relative text-white font-bold" onClick={goToPrifile}>
+              <p className="text-content">welcome {user.name}</p>
+              <p className="text-hover">Go to Profile</p>
             </button>
             <button 
               aria-label='Toggle GPT search view'
