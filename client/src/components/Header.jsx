@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import logo from '../assets/logo.png';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { removeUser } from '../utils/userSlice';
 import { addGptSearchViewToggle } from '../utils/gptSlice';
@@ -10,53 +10,53 @@ import toast from 'react-hot-toast';
 
 const Header = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.user.user);
-  const showGptSearchView = useSelector((store) => store.gpt.gptSearchViewToggle);
+  const user = useSelector((state) => state?.user?.user);
+  const showGptSearchView = useSelector((store) => store?.gpt?.gptSearchViewToggle);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+  const isProfilePage = location.pathname === '/profile';
+
   useEffect(() => {
-    if (user) {
-      if(window.location.pathname === '/') {
-        navigate('/browse');
-      }
-    }else{
+    if (!user && window.location.pathname !== '/') {
       navigate('/');
+    } else if (user && window.location.pathname === '/') {
+      navigate('/browse');
     }
-  }, []);
+  }, [user, navigate]);
 
   const handleSignOut = async () => {
     try {
-        const response = await axios.get(`${USER_API_END_POINT}/logout`, { withCredentials: true });
-        if (response.data.success) {
-            toast.success(response.data.message);
-            dispatch(removeUser()); 
-            navigate('/'); 
-        } else {
-            console.error('Sign out failed:', response.data.message);
-        }
+      const response = await axios.get(`${USER_API_END_POINT}/logout`, { withCredentials: true });
+      if (response.data.success) {
+        toast.success(response.data.message);
+        dispatch(removeUser());
+        navigate('/');
+      } else {
+        console.error('Sign out failed:', response.data.message);
+      }
     } catch (error) {
-        console.error('Error signing out: ', error);
+      console.error('Error signing out: ', error);
     }
-};
-
+  };
 
   const handleGptSearchClick = () => {
     dispatch(addGptSearchViewToggle());
     setIsMenuOpen(false);
-  }
+  };
 
   const toggleMenu = () => {
     setIsMenuOpen(prevState => !prevState);
-  }
+  };
 
-  const GoToHomePage = async() => {
+  const GoToHomePage = () => {
     navigate('/');
-  }
+  };
 
-  const goToPrifile = async() =>{
+  const goToProfile = () => {
     navigate('/profile');
-  }
+  };
 
   return (
     <div className="fixed top-0 left-0 right-0 z-50 flex justify-between items-center px-4 py-2 transition duration-300 ease-in-out bg-gradient-to-b from-black to-transparent">
@@ -72,18 +72,29 @@ const Header = () => {
           >
             {isMenuOpen ? 'X' : '☰'}
           </button>
-          <div className={`md:flex ${isMenuOpen ? 'flex flex-col absolute top-full right-0 bg-black p-4' : 'hidden'}`}>
-            <button className="relative text-white font-bold" onClick={goToPrifile}>
-              <p className="text-content">welcome {user.name}</p>
-              <p className="text-hover">Go to Profile</p>
-            </button>
-            <button 
-              aria-label='Toggle GPT search view'
-              className='p-2 m-2 text-xl font-bold bg-purple-600 rounded-md text-white hover:bg-purple-900 ease-in-out transition-opacity'
-              onClick={handleGptSearchClick}
-            >
-              {showGptSearchView ? "AI Flix" : "GPT Search"}
-            </button>
+          <div className={`md:flex items-center ${isMenuOpen ? 'flex flex-col absolute top-full right-0 bg-black p-4' : 'hidden'}`}>
+            {!isProfilePage && (
+              <>
+                <button 
+                  className="relative group text-white font-bold p-2 m-2 rounded bg-blue-500 hover:bg-blue-600 transition-colors duration-300"
+                  onClick={goToProfile}
+                >
+                  <span className="block group-hover:hidden">
+                    Welcome {user.name}
+                  </span>
+                  <span className="hidden group-hover:block">
+                    Go to Profile
+                  </span>
+                </button>
+                <button 
+                  aria-label='Toggle GPT search view'
+                  className='p-2 m-2 text-xl font-bold bg-purple-600 rounded-md text-white hover:bg-purple-900 ease-in-out transition-opacity'
+                  onClick={handleGptSearchClick}
+                >
+                  {showGptSearchView ? "AI Flix" : "GPT Search"}
+                </button>
+              </>
+            )}
             <button
               aria-label='Sign out'
               className='text-white p-2 m-2 rounded-md bg-zinc-700 hover:bg-red-500 transition-opacity text-xl font-bold'
