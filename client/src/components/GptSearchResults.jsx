@@ -12,7 +12,7 @@ const GptSearchResults = () => {
   // }
 
   const handleMovieClick = (movieId) => {
-    navigate(`/movieinfo/${movieId}`); // Navigate to the movie info page
+    navigate(`/movieinfo/${movieId}`);
   };
 
   return (
