@@ -2,10 +2,11 @@ import React, { useEffect, useState } from 'react';
 import logo from '../assets/logo.png';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { addUser, removeUser } from '../utils/userSlice';
+import { removeUser } from '../utils/userSlice';
 import { addGptSearchViewToggle } from '../utils/gptSlice';
 import axios from 'axios';
 import { USER_API_END_POINT } from '../utils/constants';
+import toast from 'react-hot-toast';
 
 const Header = () => {
   const navigate = useNavigate();
@@ -15,19 +16,6 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   useEffect(() => {
-    // const unsubscribe = auth.onAuthStateChanged((user) => {
-    //   if (user) {
-    //     const { uid, email, displayName } = user;
-    //     dispatch(addUser({ uid, email, displayName }));
-    //     if (window.location.pathname === '/') {
-    //       navigate('/browse');
-    //     }
-    //   } else {
-    //     dispatch(removeUser());
-    //     navigate('/');
-    //   }
-    // });
-    // return () => unsubscribe();
     if (user) {
       if(window.location.pathname === '/') {
         navigate('/browse');
@@ -41,6 +29,7 @@ const Header = () => {
     try {
         const response = await axios.get(`${USER_API_END_POINT}/logout`, { withCredentials: true });
         if (response.data.success) {
+            toast.success(response.data.message);
             dispatch(removeUser()); 
             navigate('/'); 
         } else {
@@ -80,6 +69,9 @@ const Header = () => {
             {isMenuOpen ? 'X' : '☰'}
           </button>
           <div className={`md:flex ${isMenuOpen ? 'flex flex-col absolute top-full right-0 bg-black p-4' : 'hidden'}`}>
+            <button className='text-white font-bold'>
+              <p>{`welocome ${user.name}`}</p>
+            </button>
             <button 
               aria-label='Toggle GPT search view'
               className='p-2 m-2 text-xl font-bold bg-purple-600 rounded-md text-white hover:bg-purple-900 ease-in-out transition-opacity'

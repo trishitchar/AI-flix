@@ -9,10 +9,7 @@ import axios from 'axios';
 import { USER_API_END_POINT } from '../utils/constants';
 import { useNavigate } from 'react-router-dom';
 import { addUser } from '../utils/userSlice';
-
-// Uncomment if using Firebase
-// import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from "firebase/auth";
-// import { auth } from "../utils/firebase";
+import toast from 'react-hot-toast'
 
 const Login = () => {
   const nameRef = useRef(null);
@@ -31,6 +28,12 @@ const Login = () => {
     const email = emailRef.current.value;
     const password = passwordRef.current.value;
 
+    const message = checkValidDataSignIn(email, password);
+    if (message) {
+        setErrorMessage(message);
+        return;
+    }
+
     try {
       const response = await axios.post(`${USER_API_END_POINT}/login`, { email, password }, {
         headers: {
@@ -39,6 +42,7 @@ const Login = () => {
         withCredentials: true
       });
       if (response.data.success) {
+        toast.success(response.data.message);
         const { user } = response.data;
         dispatch(addUser(user));
         navigate('/browse');
@@ -46,6 +50,7 @@ const Login = () => {
         setErrorMessage(response.data.message || 'Sign in failed');
       }
     } catch (error) {
+      toast.error(error.message);
       setErrorMessage(`Error: ${error.message}`);
       console.error(error);
     }
@@ -60,29 +65,29 @@ const Login = () => {
 
     const message = checkValidDataSignUp(name, email, password);
     if (message) {
-      setErrorMessage(message);
-      return;
+        setErrorMessage(message);
+        return;
     }
 
     try {
-      const response = await axios.post(`${USER_API_END_POINT}/signup`, { name, email, password }, {
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        withCredentials: true
-      });
-      if (response.data.success) {
-        const { user } = response.data;
-        dispatch(addUser(user));
-        navigate('/browse');
-      } else {
-        setErrorMessage(response.data.message || 'Sign up failed');
-      }
+        const response = await axios.post(`${USER_API_END_POINT}/signup`, { name, email, password }, {
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            withCredentials: true
+        });
+        if (response.data.success) {
+            toast.success(response.data.message);
+            toggleSignUp();
+        } else {
+            setErrorMessage(response.data.message || 'Sign up failed');
+        }
     } catch (error) {
-      setErrorMessage(`Error: ${error.message}`);
-      console.error(error);
+        setErrorMessage(`Error: ${error.message}`);
+        console.error(error);
     }
-  };
+};
+
 
   return (
     <div className='relative w-full h-screen overflow-hidden'>
