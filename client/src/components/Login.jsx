@@ -1,12 +1,18 @@
-"use client"
+"use client";
+
 import React, { useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from "firebase/auth";
 import Header from './Header';
 import bg from '../assets/background_flix.jpg';
 import { checkValidDataSignIn, checkValidDataSignUp } from '../utils/validate';
-import { auth } from "../utils/firebase";
+import axios from 'axios';
+import { USER_API_END_POINT } from '../utils/constants';
+import { useNavigate } from 'react-router-dom';
 import { addUser } from '../utils/userSlice';
+
+// Uncomment if using Firebase
+// import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from "firebase/auth";
+// import { auth } from "../utils/firebase";
 
 const Login = () => {
   const nameRef = useRef(null);
@@ -15,32 +21,37 @@ const Login = () => {
   const [isSignUp, setIsSignUp] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const toggleSignUp = () => setIsSignUp(!isSignUp);
+  const toggleSignUp = () => setIsSignUp(prevState => !prevState);
 
-  //signIn
+  // Manual SignIn logic
   const handleSignIn = async (e) => {
     e.preventDefault();
     const email = emailRef.current.value;
     const password = passwordRef.current.value;
 
-    const message = checkValidDataSignIn(email, password);
-    if (message) {
-      setErrorMessage(message);
-      return;
-    }
-
-
-    //if no error, signin with google
     try {
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
-      console.log(userCredential.user);
+      const response = await axios.post(`${USER_API_END_POINT}/login`, { email, password }, {
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        withCredentials: true
+      });
+      if (response.data.success) {
+        const { user } = response.data;
+        dispatch(addUser(user));
+        navigate('/browse');
+      } else {
+        setErrorMessage(response.data.message || 'Sign in failed');
+      }
     } catch (error) {
-      setErrorMessage(`${error.code}: ${error.message}`);
+      setErrorMessage(`Error: ${error.message}`);
+      console.error(error);
     }
   };
 
-  //signup logic
+  // Manual SignUp logic
   const handleSignUp = async (e) => {
     e.preventDefault();
     const name = nameRef.current.value;
@@ -53,14 +64,23 @@ const Login = () => {
       return;
     }
 
-    //if no error signup with google
     try {
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      await updateProfile(auth.currentUser, { displayName: name });
-      const { uid, email: userEmail, displayName } = auth.currentUser;
-      dispatch(addUser({ uid, email: userEmail, displayName }));
+      const response = await axios.post(`${USER_API_END_POINT}/signup`, { name, email, password }, {
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        withCredentials: true
+      });
+      if (response.data.success) {
+        const { user } = response.data;
+        dispatch(addUser(user));
+        navigate('/browse');
+      } else {
+        setErrorMessage(response.data.message || 'Sign up failed');
+      }
     } catch (error) {
-      setErrorMessage(`${error.code}: ${error.message}`);
+      setErrorMessage(`Error: ${error.message}`);
+      console.error(error);
     }
   };
 
@@ -96,10 +116,17 @@ const Login = () => {
             className='p-2 m-2 border border-gray-300 rounded-lg outline-none w-80'
             required
           />
-          <button type='submit' className='bg-red-600 text-white m-2 p-2 rounded-md shadow-md w-80 hover:bg-red-700 focus:outline-none'>
+          <button
+            type='submit'
+            className='bg-red-600 text-white m-2 p-2 rounded-md shadow-md w-80 hover:bg-red-700 focus:outline-none'
+          >
             {isSignUp ? 'Sign Up' : 'Sign In'}
           </button>
-          <button type='button' onClick={toggleSignUp} className='text-blue-500 hover:underline mt-2'>
+          <button
+            type='button'
+            onClick={toggleSignUp}
+            className='text-blue-500 hover:underline mt-2'
+          >
             {isSignUp ? 'Already have an account? Sign In' : "Don't have an account? Sign Up"}
           </button>
         </form>

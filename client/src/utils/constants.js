@@ -8,9 +8,11 @@ export const API_OPTIONS = {
 
   export const IMG_LINK = "https://image.tmdb.org/t/p/original";
 
-  export const REACT_APP_OPENAI_KEY = "sk-proj-RMoLLhIK50aXyfvFP9BHT3BlbkFJqHRvFfSZZn0qwVHfzILk";
+  // export const REACT_APP_OPENAI_KEY = "sk-proj-RMoLLhIK50aXyfvFP9BHT3BlbkFJqHRvFfSZZn0qwVHfzILk";
 
   export const REACT_APP_GEMINI = "AIzaSyC4D2fa6J7dPiF06yA8N2oeZYNECLCMJD0"
+
+  export const USER_API_END_POINT = "http://localhost:8080/api/user"
 
   /*
   export const REACT_APP_GEMINI = "AIzaSyC_NFugLx75aVxxu8m0uuiFaIa7WvD64kA"

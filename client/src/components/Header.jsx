@@ -2,31 +2,31 @@ import React, { useEffect, useState } from 'react';
 import logo from '../assets/logo.png';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { auth } from '../utils/firebase'
+import { auth } from '../utils/firebase';
 import { addUser, removeUser } from '../utils/userSlice';
 import { addGptSearchViewToggle } from '../utils/gptSlice';
 
 const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.user);
+  const user = useSelector((state) => state.user.user);
   const showGptSearchView = useSelector((store) => store.gpt.gptSearchViewToggle);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      if (user) {
-        const { uid, email, displayName } = user;
-        dispatch(addUser({ uid, email, displayName }));
-        if (window.location.pathname === '/') {
-          navigate('/browse');
-        }
-      } else {
-        dispatch(removeUser());
-        navigate('/');
-      }
-    });
-    return () => unsubscribe();
+    // const unsubscribe = auth.onAuthStateChanged((user) => {
+    //   if (user) {
+    //     const { uid, email, displayName } = user;
+    //     dispatch(addUser({ uid, email, displayName }));
+    //     if (window.location.pathname === '/') {
+    //       navigate('/browse');
+    //     }
+    //   } else {
+    //     dispatch(removeUser());
+    //     navigate('/');
+    //   }
+    // });
+    // return () => unsubscribe();
   }, [dispatch, navigate]);
 
   const handleSignOut = async () => {
@@ -45,11 +45,11 @@ const Header = () => {
   }
 
   const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
+    setIsMenuOpen(prevState => !prevState);
   }
 
-  const GoToHomePage = () =>{
-    navigate('/')
+  const GoToHomePage = () => {
+    navigate('/');
   }
 
   return (
@@ -60,20 +60,22 @@ const Header = () => {
       {user && (
         <div className='flex items-center'>
           <button 
+            aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
             className='md:hidden text-white p-2'
             onClick={toggleMenu}
           >
             {isMenuOpen ? 'X' : '☰'}
-            
           </button>
           <div className={`md:flex ${isMenuOpen ? 'flex flex-col absolute top-full right-0 bg-black p-4' : 'hidden'}`}>
             <button 
+              aria-label='Toggle GPT search view'
               className='p-2 m-2 text-xl font-bold bg-purple-600 rounded-md text-white hover:bg-purple-900 ease-in-out transition-opacity'
               onClick={handleGptSearchClick}
             >
-              {showGptSearchView ? "AI flix" : "Gpt Search"}
+              {showGptSearchView ? "AI Flix" : "GPT Search"}
             </button>
             <button
+              aria-label='Sign out'
               className='text-white p-2 m-2 rounded-md bg-zinc-700 hover:bg-red-500 transition-opacity text-xl font-bold'
               onClick={handleSignOut}
             >
