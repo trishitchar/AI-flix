@@ -23,7 +23,7 @@ const Header = () => {
     }else{
       navigate('/');
     }
-  }, [user, navigate]);
+  }, []);
 
   const handleSignOut = async () => {
     try {
