@@ -1,13 +1,15 @@
 import axios from 'axios';
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { USER_API_END_POINT } from '../utils/constants';
 import toast from 'react-hot-toast';
+import { addLikedVideo } from '../utils/userSlice';
 
 const MovieStats = () => {
-    const info = useSelector((state) => state.movies.movieInfo);
-    const email = useSelector((state) => state.user.user.email);
-    const key = useSelector((state) => state.movies.nowTrailer.key);
+    const info = useSelector((state) => state?.movies?.movieInfo);
+    const email = useSelector((state) => state?.user?.user?.email);
+    const key = useSelector((state) => state?.movies?.nowTrailer?.key);
+    const dispatch = useDispatch();
 
     if (!info) return <div className="text-center text-white">Loading...</div>;
 
@@ -20,25 +22,28 @@ const MovieStats = () => {
         try {
             const response = await axios.post(`${USER_API_END_POINT}/likedVideo`, { email, liked: key });
             if (response.data.success) {
+                dispatch(addLikedVideo( key)); 
                 toast.success(response.data.message);
+            } else {
+                toast.error(response.data.message);
             }
         } catch (error) {
             console.error("Error liking the video:", error);
+            toast.error("Failed to like the video.");
         }
     };
 
     return (
-        <div className='w-full'>
-            <div className='flex justify-around w-5/6'>
+        <div>
+            <div className='flex justify-around items-center justify-center bg-white'>
                 <button
-                    className='m-2 p-2 bg-white text-black font-bold'
+                    className='m-2 p-2 text-white bg-gray-900 font-bold rounded-md'
                     onClick={handleLike}
                 >
                     ❤ Like The Video
                 </button>
                 <button
-                    className='m-2 p-2 bg-white text-black font-bold'
-                    // Add functionality for 'Watch Later' button here
+                    className='m-2 p-2 text-white bg-gray-900 font-bold rounded-md'
                 >
                     + Watch Later
                 </button>

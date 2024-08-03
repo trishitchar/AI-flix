@@ -3,16 +3,9 @@ import { User } from "../model/UserModel.js";
 export const LikedVideo = async (req, res) => {
     const { email, liked } = req.body;
 
-    if (!email) {
+    if (!email || !liked) {
         return res.status(400).json({
-            message: "Email is required",
-            success: false
-        });
-    }
-
-    if (!liked) {
-        return res.status(400).json({
-            message: "Liked URL is required",
+            message: "Email and Liked URL are required",
             success: false
         });
     }
@@ -27,14 +20,20 @@ export const LikedVideo = async (req, res) => {
             });
         }
 
-        user.liked.push(liked);
+        if (user.liked.includes(liked)) {
+            return res.status(400).json({
+                message: "Video already liked",
+                success: false
+            });
+        }
 
+        user.liked.push(liked);
         await user.save();
 
         return res.status(200).json({
             message: "Video added to liked list",
             success: true,
-            data: user.liked
+            liked: user.liked
         });
 
     } catch (error) {
@@ -45,6 +44,7 @@ export const LikedVideo = async (req, res) => {
         });
     }
 };
+
 
 export const RemoveLikedVideo = async (req, res) => {
     const { email, liked } = req.body;
