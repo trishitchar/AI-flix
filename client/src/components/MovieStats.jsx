@@ -1,35 +1,49 @@
 import axios from 'axios';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { USER_API_END_POINT } from '../utils/constants';
 import toast from 'react-hot-toast';
-import { addLikedVideo } from '../utils/userSlice';
+import { addLikedVideo, removeLikedVideo } from '../utils/userSlice';
 
 const MovieStats = () => {
     const info = useSelector((state) => state?.movies?.movieInfo);
     const email = useSelector((state) => state?.user?.user?.email);
     const key = useSelector((state) => state?.movies?.nowTrailer?.key);
+    const likedVideos = useSelector((state) => state?.user?.likedVideos || []);
     const dispatch = useDispatch();
 
-    if (!info) return <div className="text-center text-white">Loading...</div>;
+    const [isLiked, setIsLiked] = useState(false);
 
-    const handleLike = async () => {
+    useEffect(() => {
+        if (key) {
+            setIsLiked(likedVideos && likedVideos.includes(key));
+        }
+    }, [key, likedVideos]);
+
+    const handleLikeDislike = async () => {
         if (!email || !key) {
             console.error("Email or key is missing");
             return;
         }
 
         try {
-            const response = await axios.post(`${USER_API_END_POINT}/likedVideo`, { email, liked: key });
+            const action = isLiked ? 'dislike' : 'like';
+            const response = await axios.post(`${USER_API_END_POINT}/likedVideo`, { email, liked: key, action });
+
             if (response.data.success) {
-                dispatch(addLikedVideo( key)); 
+                if (isLiked) {
+                    dispatch(removeLikedVideo(key));
+                } else {
+                    dispatch(addLikedVideo(key));
+                }
+                setIsLiked(!isLiked);
                 toast.success(response.data.message);
             } else {
                 toast.error(response.data.message);
             }
         } catch (error) {
-            console.error("Error liking the video:", error);
-            toast.error("Failed to like the video.");
+            console.error("Error toggling the video:", error);
+            toast.error("Failed to toggle the video.");
         }
     };
 
@@ -38,9 +52,9 @@ const MovieStats = () => {
             <div className='flex justify-around items-center justify-center bg-white'>
                 <button
                     className='m-2 p-2 text-white bg-gray-900 font-bold rounded-md'
-                    onClick={handleLike}
+                    onClick={handleLikeDislike}
                 >
-                    ❤ Like The Video
+                    {isLiked ? "❌ Dislike the Video" : "❤ Like The Video"}
                 </button>
                 <button
                     className='m-2 p-2 text-white bg-gray-900 font-bold rounded-md'

@@ -1,11 +1,11 @@
 import { User } from "../model/UserModel.js";
 
 export const LikedVideo = async (req, res) => {
-    const { email, liked } = req.body;
+    const { email, liked, action } = req.body;
 
-    if (!email || !liked) {
+    if (!email || !liked || !action) {
         return res.status(400).json({
-            message: "Email and Liked URL are required",
+            message: "Email, Liked URL, and Action are required",
             success: false
         });
     }
@@ -20,21 +20,48 @@ export const LikedVideo = async (req, res) => {
             });
         }
 
-        if (user.liked.includes(liked)) {
+        // Ensure `user.liked` is an array
+        user.liked = user.liked || [];
+
+        if (action === 'like') {
+            if (user.liked.includes(liked)) {
+                return res.status(400).json({
+                    message: "Video already liked",
+                    success: false
+                });
+            }
+
+            user.liked.push(liked);
+            await user.save();
+
+            return res.status(200).json({
+                message: "Video added to liked list",
+                success: true,
+                liked: user.liked
+            });
+
+        } else if (action === 'dislike') {
+            if (!user.liked.includes(liked)) {
+                return res.status(400).json({
+                    message: "Video not found in liked list",
+                    success: false
+                });
+            }
+
+            user.liked = user.liked.filter(v => v !== liked);
+            await user.save();
+
+            return res.status(200).json({
+                message: "Video removed from liked list",
+                success: true,
+                liked: user.liked
+            });
+        } else {
             return res.status(400).json({
-                message: "Video already liked",
+                message: "Invalid action",
                 success: false
             });
         }
-
-        user.liked.push(liked);
-        await user.save();
-
-        return res.status(200).json({
-            message: "Video added to liked list",
-            success: true,
-            liked: user.liked
-        });
 
     } catch (error) {
         console.error("Error in LikedVideo handler:", error);
@@ -44,6 +71,7 @@ export const LikedVideo = async (req, res) => {
         });
     }
 };
+
 
 
 export const RemoveLikedVideo = async (req, res) => {
