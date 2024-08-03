@@ -3,8 +3,13 @@ import { useSelector } from 'react-redux';
 import Header from './Header';
 
 const Profile = () => {
-    const user = useSelector((store) => store.user.user);
+    const user = useSelector((store) => store?.user?.user);
+    const likedVideos = useSelector((state) => state?.user?.likedVideos || []);
+    const liked = useSelector((state) => state?.user?.user?.liked || []);
+
     if (!user) return null;
+
+    const allLikedVideos = Array.from(new Set([...likedVideos, ...liked]));
 
     return (
         <div className="bg-gray-100 min-h-screen">
@@ -23,7 +28,26 @@ const Profile = () => {
                             <label className="block text-gray-700 text-sm font-bold mb-2">Email:</label>
                             <p className="text-gray-900">{user.email}</p>
                         </div>
-                        {/* Add more user details here as needed */}
+                    </div>
+                    <div className="p-4">
+                        <h1 className="text-black text-xl font-bold mb-4">Your Liked Videos</h1>
+                        {allLikedVideos.length > 0 ? (
+                            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                                {allLikedVideos.map((videoKey) => (
+                                    <div key={videoKey} className="border rounded-lg overflow-hidden shadow-md">
+                                        <iframe
+                                            className="w-full h-40 md:h-48"
+                                            src={`https://www.youtube.com/embed/${videoKey}?autoplay=0&mute=1&controls=1&modestbranding=1`}
+                                            title={`YouTube video player - ${videoKey}`}
+                                            allow="encrypted-media"
+                                            allowFullScreen
+                                        ></iframe>
+                                    </div>
+                                ))}
+                            </div>
+                        ) : (
+                            <p className="text-gray-600">You have not liked any videos yet.</p>
+                        )}
                     </div>
                 </div>
             </div>
