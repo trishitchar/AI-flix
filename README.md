@@ -14,7 +14,10 @@
     an qr code to share the site quickly 
     a user can upload a video/youtube url and image poster for a movie or he can request a movie
 
-# backend 
+# frontend - cd client 
+```npm run dev```
+
+# backend - cd server 
     server
     -express
     -mongo
@@ -22,4 +25,4 @@
     -nodemon
     -dotenv
     -bcrypt -jwt - cookie-parser
-
+```npm run dev```
