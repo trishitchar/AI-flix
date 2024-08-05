@@ -12,7 +12,7 @@ export const useAuthMiddleware = () => {
 
   useEffect(() => {
     const token = getCookie('token');
-    console.log(token);
+    // console.log(token);
 
     if (window.location.pathname === '/' && token) {
       navigate('/browse');

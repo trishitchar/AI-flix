@@ -8,8 +8,8 @@ import { useSelector } from 'react-redux';
 const useGeminiResult = () => {
   const [error, setError] = useState(null);
   const [recommendations, setRecommendations] = useState('');
-  const movieResult = useSelector((store) => store?.gpt?.movieResult)
-  console.log(movieResult[0])
+  // const movieResult = useSelector((store) => store?.gpt?.movieResult)
+  // console.log(movieResult[0])
 
   const searchMovies = async (query) => {
     setError(null);
@@ -39,7 +39,7 @@ const useGeminiResult = () => {
       setError('Failed to fetch recommendations. Please try again.');
     }
   };
-  !movieResult && useTmdbMovieSearch(recommendations);
+  useTmdbMovieSearch(recommendations);
   return { error, recommendations, searchMovies };
 };
 
