@@ -16,15 +16,15 @@ const Header = () => {
   const showGptSearchView = useSelector((store) => store?.gpt?.gptSearchViewToggle);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const isProfilePage = location.pathname === '/profile';
+  const isProfilePage = window.location.pathname === '/profile';
 
-  useEffect(() => {
-    if (!user && window.location.pathname !== '/') {
-      navigate('/');
-    } else if (user && window.location.pathname === '/') {
-      navigate('/browse');
-    }
-  }, [user, navigate]);
+  // useEffect(() => {
+  //   if (!user && window.location.pathname !== '/') {
+  //     navigate('/');
+  //   } else if (user && window.location.pathname === '/') {
+  //     navigate('/browse');
+  //   }
+  // }, [user, navigate]);
 
   const handleSignOut = async () => {
     try {

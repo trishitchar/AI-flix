@@ -2,10 +2,14 @@ import { User } from "../model/UserModel.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import dotenv from 'dotenv';
+import cookieParser from 'cookie-parser';
+import express from 'express';
+const app = express();
 
 dotenv.config();
-
 const JWT_SECRET = process.env.JWT_SECRET || 'Tchar';
+
+app.use(cookieParser());
 
 export const signUp = async (req, res) => {
     const { name, email, password } = req.body;
@@ -50,11 +54,12 @@ export const login = async (req, res) => {
             return res.status(400).json({ message: "Incorrect email or password", success: false });
         }
 
-        const token = jwt.sign({ userId: existingUser._id }, JWT_SECRET, { expiresIn: '1h' });
+        const token = jwt.sign({ userId: existingUser._id }, JWT_SECRET, { expiresIn: '1d' });
 
         return res.status(200)
-                  .cookie("token", token, { httpOnly: true, secure: process.env.NODE_ENV === 'production' })
+                  .cookie("token", token, { httpOnly: false, secure: process.env.NODE_ENV === 'production' })
                   .json({ message: `Welcome back ${existingUser.name}`, success: true, token, user: existingUser });
+
 
     } catch (error) {
         console.error("Login Error:", error);
@@ -62,10 +67,11 @@ export const login = async (req, res) => {
     }
 };
 
+
 export const logOut = (req, res) => {
     try {
         res.cookie("token", "", {
-            httpOnly: true, 
+            httpOnly: false, 
             expires: new Date(0),
             secure: process.env.NODE_ENV === 'production'
         });
@@ -75,4 +81,3 @@ export const logOut = (req, res) => {
         res.status(500).json({ message: "Server error", success: false });
     }
 };
-

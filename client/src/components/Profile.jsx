@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import Header from './Header';
 
@@ -9,7 +9,12 @@ const Profile = () => {
 
     if (!user) return null;
 
-    const allLikedVideos = Array.from(new Set([...likedVideos, ...liked]));
+    // const allLikedVideos = Array.from(new Set([...likedVideos, ...liked]));
+
+    const allLikedVideos = useMemo(() => {
+        return Array.from(new Set([...likedVideos, ...liked]));
+    }, [likedVideos, liked]);
+
 
     return (
         <div className="bg-gray-100 min-h-screen">

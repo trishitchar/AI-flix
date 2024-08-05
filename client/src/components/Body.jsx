@@ -1,33 +1,24 @@
-import React from 'react'
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import Login from './Login'
-import Browse from './Browse'
-import MovieInfo from './MovieInfo'
-import Profile from './Profile'
+import React from 'react';
+import { Routes, Route, Navigate } from 'react-router-dom';
+import Login from './Login';
+import Browse from './Browse';
+import MovieInfo from './MovieInfo';
+import Profile from './Profile';
+import  {useAuthMiddleware}  from '../hooks/useAuthMiddleware';
 
 const Body = () => {
-  const appRouter = createBrowserRouter([
-    {
-      path:"/",
-      element:<Login/>
-    },
-    {
-      path:"/browse",
-      element:<Browse/>
-    },{
-      path:"/movieinfo/:id",
-      element:<MovieInfo/>
-    },{
-      path:"/profile",
-      element:<Profile/>
-    }
-  ])
+  useAuthMiddleware();
 
   return (
     <div>
-      <RouterProvider router={appRouter}/>
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="/browse" element={<Browse />} />
+        <Route path="/movieinfo/:id" element={<MovieInfo />} />
+        <Route path="/profile" element={<Profile />} />
+      </Routes>
     </div>
-  )
-}
+  );
+};
 
-export default Body
+export default Body;
