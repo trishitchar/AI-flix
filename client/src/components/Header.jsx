@@ -43,6 +43,7 @@ const Header = () => {
 
   const handleGptSearchClick = () => {
     dispatch(addGptSearchViewToggle());
+    navigate('/browse')
     setIsMenuOpen(false);
   };
 
@@ -86,15 +87,15 @@ const Header = () => {
                     Go to Profile
                   </span>
                 </button>
-                <button 
+              </>
+            )}
+            <button 
                   aria-label='Toggle GPT search view'
                   className='p-2 m-2 text-xl font-bold bg-purple-600 rounded-md text-white hover:bg-purple-900 ease-in-out transition-opacity'
                   onClick={handleGptSearchClick}
                 >
                   {showGptSearchView ? "AI Flix" : "GPT Search"}
                 </button>
-              </>
-            )}
             <button
               aria-label='Sign out'
               className='text-white p-2 m-2 rounded-md bg-zinc-700 hover:bg-red-500 transition-opacity text-xl font-bold'
