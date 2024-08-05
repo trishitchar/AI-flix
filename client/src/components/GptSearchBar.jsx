@@ -1,17 +1,18 @@
 import React, { useRef } from 'react';
-import ShimmerUi from './ShimmerUi';
 import useGeminiResult from '../hooks/useGeminiSearch';
+// import useTmdbMovieSearch from '../hooks/useTmdbMovieSearch';
+// import GptSearchResults from './GptSearchResults';
 
 const GptSearchBar = () => {
   const inputRef = useRef();
   const { error, recommendations, searchMovies } = useGeminiResult();
+  // const movieResults = useTmdbMovieSearch(recommendations);
 
   const handleSearch = async (e) => {
     e.preventDefault();
     const query = inputRef.current.value;
     if (query) {
-      const data = await searchMovies(query);
-      if (!data) return <ShimmerUi />;
+      await searchMovies(query);
     }
   };
 
@@ -56,7 +57,7 @@ const GptSearchBar = () => {
         </div>
       )}
 
-      {/* {recommendations && <div className="mt-4">{recommendations}</div>} */}
+      {/* <GptSearchResults movieResults={movieResults} /> */}
     </div>
   );
 };

@@ -3,10 +3,13 @@ import { REACT_APP_GEMINI } from '../utils/constants';
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { HarmBlockThreshold, HarmCategory} from "@google/generative-ai";
 import useTmdbMovieSearch from './useTmdbMovieSearch';
+import { useSelector } from 'react-redux';
 
 const useGeminiResult = () => {
   const [error, setError] = useState(null);
   const [recommendations, setRecommendations] = useState('');
+  const movieResult = useSelector((store) => store?.gpt?.movieResult)
+  console.log(movieResult[0])
 
   const searchMovies = async (query) => {
     setError(null);
@@ -36,7 +39,7 @@ const useGeminiResult = () => {
       setError('Failed to fetch recommendations. Please try again.');
     }
   };
-  useTmdbMovieSearch(recommendations);
+  !movieResult && useTmdbMovieSearch(recommendations);
   return { error, recommendations, searchMovies };
 };
 

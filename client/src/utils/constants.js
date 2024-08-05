@@ -13,12 +13,12 @@ export const API_OPTIONS = {
   export const REACT_APP_GEMINI = "AIzaSyC4D2fa6J7dPiF06yA8N2oeZYNECLCMJD0"
 
   // if you're using it on localhost then comment the render url otherwise commment the localhost url
-  // export const USER_API_END_POINT = "http://localhost:8080/api/user"
+  export const USER_API_END_POINT = "http://localhost:8080/api/user"
   // export const USER_API_END_POINT = "https://ai-flix-api.onrender.com/api/user"
-  
-  export const USER_API_END_POINT = process.env.NODE_ENV === 'development'
-    ? 'http://localhost:8080/api/user'
-    : 'https://ai-flix-api.onrender.com/api/user';
+
+  // export const USER_API_END_POINT = process.env.NODE_ENV === 'development'
+  //   ? 'http://localhost:8080/api/user'
+  //   : 'https://ai-flix-api.onrender.com/api/user';
 
   /*
   export const REACT_APP_GEMINI = "AIzaSyC_NFugLx75aVxxu8m0uuiFaIa7WvD64kA"
