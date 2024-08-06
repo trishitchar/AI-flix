@@ -1,3 +1,20 @@
+# Live demo
+![1 Sign Up-min](https://github.com/user-attachments/assets/eb1c4d5c-0b25-4295-a0e4-f41a5594bbc9)
+![2 sign in-min](https://github.com/user-attachments/assets/5d43a47e-0856-4fd0-be93-ca618796031d)
+![3 brose page-min](https://github.com/user-attachments/assets/d8b461c4-7236-4400-89e3-a71ef900e13a)
+![3 1 browse page-min](https://github.com/user-attachments/assets/46a89ae0-7ac2-45ab-b302-fc4d44cd0e4a)
+![4 various types of movies-min](https://github.com/user-attachments/assets/a50969df-6709-4376-8582-e34378d5a154)
+![5 movie playing-min](https://github.com/user-attachments/assets/9532af41-164a-496d-bbb1-719a8e152e3b)
+![5 1 movie playing-min](https://github.com/user-attachments/assets/bbd7ac18-0984-4d90-a506-44b2ca27d580)
+![6 like the video-min](https://github.com/user-attachments/assets/ce4fe895-f193-43cf-b90e-60b80cb8f9af)
+![7 profile and liked video-min](https://github.com/user-attachments/assets/079ac945-4dbc-404e-b5de-8aaf2549836c)
+![8 AI search-min](https://github.com/user-attachments/assets/3230ce12-14ff-49bf-bb6c-b9b5df661ac6)
+![9 AI results-min](https://github.com/user-attachments/assets/3ab42abc-f2af-48c7-a860-3306647cde2f)
+![10 watch suggested movies-min](https://github.com/user-attachments/assets/eb6160d8-49be-4b2e-a806-7a0bfadd6cf5)
+![11 Profile section-min](https://github.com/user-attachments/assets/ae8e0f11-8d38-47ea-b771-c3f444c33461)
+![12 error handle-min](https://github.com/user-attachments/assets/1849663f-950e-4880-8d42-552e7fb5813b)
+![13 logout-min](https://github.com/user-attachments/assets/3d00c60f-c2ba-4c22-84b6-1f2d7b0ff62c)
+
 # Need
     Login/sign up - manual + with google + github
                   - maybe will switch to jwt and mongo in future
