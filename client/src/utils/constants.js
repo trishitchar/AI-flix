@@ -21,10 +21,5 @@ export const API_OPTIONS = {
   //   : 'https://ai-flix-api.onrender.com/api/user';
 
   /*
-  export const REACT_APP_GEMINI = "AIzaSyC_NFugLx75aVxxu8m0uuiFaIa7WvD64kA"
-  export const REACT_APP_GEMINI = "AIzaSyDnmiSqI7OHevZXUVpr0ah1xwhkJiJZktw"
-  export const REACT_APP_GEMINI = "AIzaSyAvNlB1-cygF8C6XWpPN9K0eryqg61I2Ps"
-  export const REACT_APP_GEMINI = "AIzaSyCXnLt0axHYvQ9dDLHltCWY1UaOTTxmvPU"
-  export const REACT_APP_GEMINI = "AIzaSyAtiLEW4oQiOJtGiPsdsGwMHi8O__7cqjU"
-  export const REACT_APP_GEMINI = "AIzaSyCYoIyYnd9UkKxaFsGc4anVrcZLjxvKcSM"
+  
 */
