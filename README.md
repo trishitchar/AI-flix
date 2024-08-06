@@ -1,3 +1,23 @@
+# Note
+``` if there's any problem occurred in Live version please clone the repo. Working perfectly in local.```
+
+# Frontend  
+```yaml 
+ cd .\client\
+```
+```yaml
+ npm i
+ npm run dev
+```
+# Backend
+```yaml 
+ cd .\server\
+```
+```yaml
+ npm i
+ npm run dev
+```
+
 # Live demo
 1 Sign Up
 ![1 Sign Up-min](https://github.com/user-attachments/assets/eb1c4d5c-0b25-4295-a0e4-f41a5594bbc9)
@@ -30,6 +50,20 @@
 13 logout
 ![13 logout-min](https://github.com/user-attachments/assets/3d00c60f-c2ba-4c22-84b6-1f2d7b0ff62c)
 
+
+# frontend - cd client 
+```npm run dev```
+
+# backend - cd server 
+    server
+    -express
+    -mongo
+    -mongoose
+    -nodemon
+    -dotenv
+    -bcrypt -jwt - cookie-parser
+```npm run dev```
+
 # Need
     Login/sign up - manual + with google + github
                   - maybe will switch to jwt and mongo in future
@@ -46,15 +80,4 @@
     an qr code to share the site quickly 
     a user can upload a video/youtube url and image poster for a movie or he can request a movie
 
-# frontend - cd client 
-```npm run dev```
 
-# backend - cd server 
-    server
-    -express
-    -mongo
-    -mongoose
-    -nodemon
-    -dotenv
-    -bcrypt -jwt - cookie-parser
-```npm run dev```
