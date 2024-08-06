@@ -1,7 +1,9 @@
 # Note
-``` if there's any problem occurred in Live version please clone the repo. Working perfectly in local.```
+``` if there's any problem occurred in Live version please clone the repo. Working perfectly fine in local.```
 
 # Frontend  
+ - go to ```client\src\utils\constants.js``` and tinker the ```USER_API_END_POINT```
+ 
 ```yaml 
  cd .\client\
 ```
