@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import Header from './Header';
 import bg from '../assets/background_flix.jpg';
@@ -19,6 +19,11 @@ const Login = () => {
   const [errorMessage, setErrorMessage] = useState(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (emailRef.current) emailRef.current.value = 'welcometoaiflix@gmail.com';
+    if (passwordRef.current) passwordRef.current.value = 'Tchar@1234';
+  }, []);
 
   const toggleSignUp = () => setIsSignUp(prevState => !prevState);
 
@@ -86,8 +91,7 @@ const Login = () => {
         setErrorMessage(`Error: ${error.message}`);
         console.error(error);
     }
-};
-
+  };
 
   return (
     <div className='relative w-full h-screen overflow-hidden'>

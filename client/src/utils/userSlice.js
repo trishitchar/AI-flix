@@ -12,6 +12,7 @@ const userSlice = createSlice({
     },
     removeUser: (state) => {
       state.user = null;
+      state.likedVideos = [];
     },
     addLikedVideo: (state, action) => {
       const newVideo = action.payload;

@@ -14,6 +14,12 @@ export const useAuthMiddleware = () => {
     const token = localStorage.getItem('token');
     console.log(token);
 
+    // if (token) {
+    //   navigate('/browse', { replace: true });
+    // } else {
+    //     navigate('/', { replace: true });
+    //   }
+
     // if (window.location.pathname === '/' && token) {
     //   navigate('/browse');
     // }

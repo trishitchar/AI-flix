@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { USER_API_END_POINT } from '../utils/constants';
 import toast from 'react-hot-toast';
 import { addLikedVideo, removeLikedVideo } from '../utils/userSlice';
+import { useNavigate } from 'react-router-dom';
 
 const MovieStats = () => {
     const info = useSelector((state) => state?.movies?.movieInfo);
@@ -11,6 +12,7 @@ const MovieStats = () => {
     const key = useSelector((state) => state?.movies?.nowTrailer?.key);
     const likedVideos = useSelector((state) => state?.user?.likedVideos || []);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const [isLiked, setIsLiked] = useState(false);
 
@@ -47,6 +49,10 @@ const MovieStats = () => {
         }
     };
 
+    const goToBrowse = async () =>{
+        navigate("/browse")
+    }
+
     return (
         <div>
             <div className='flex justify-around items-center justify-center bg-white'>
@@ -61,6 +67,13 @@ const MovieStats = () => {
                 >
                     + Watch Later
                 </button>
+                <button
+                    className='m-2 p-2 text-white bg-gray-900 font-bold rounded-md'
+                    onClick={goToBrowse}
+                >
+                    Go to home
+                </button>
+
             </div>
             <div className='bg-gray-900 text-white min-h-screen p-8'>
                 <div className='container mx-auto flex flex-col md:flex-row justify-between items-center'>
