@@ -56,10 +56,17 @@ export const login = async (req, res) => {
 
         const token = jwt.sign({ userId: existingUser._id }, JWT_SECRET, { expiresIn: '1d' });
 
-        return res.status(200)
-                  .cookie("token", token, { httpOnly: false, secure: process.env.NODE_ENV === 'production' })
-                  .json({ message: `Welcome back ${existingUser.name}`, success: true, token, user: existingUser });
+        res.cookie('token', token, {
+            httpOnly: true, // Prevents client-side JavaScript from accessing the cookie
+            secure: true, // Ensures the cookie is sent over HTTPS only
+            sameSite: 'none', // Cookie is sent only for same-site requests
+            maxAge: 24 * 60 * 60 * 1000, // 1 day expiration time
+          });
 
+        return res.status(200)
+        .json({ message: `Welcome back ${existingUser.name}`, success: true, token, user: existingUser });
+        
+        //   .cookie("token", token, { httpOnly: false, secure: process.env.NODE_ENV === 'production' })
 
     } catch (error) {
         console.error("Login Error:", error);
