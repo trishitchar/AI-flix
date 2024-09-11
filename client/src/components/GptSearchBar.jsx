@@ -19,7 +19,7 @@ const GptSearchBar = () => {
   const sendtopom = () => {
     const query = inputRef.current.value;
     if (query) {
-      window.open(`https://pom-pom-beta.vercel.app/search/${query}`, '_blank');
+      window.open(`https://www.google.com/search?q=${query}`, '_blank');
     }
   };
 
@@ -46,12 +46,12 @@ const GptSearchBar = () => {
         <div className="flex justify-center mt-6">
           <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative max-w-sm mx-4 w-full">
             <strong className="font-bold">⚠️ Alert:</strong>
-            <span className="block sm:inline"> Horny user detected. This may help you: </span>
+            <span className="block sm:inline"> couln't find movie. This may help you: </span>
             <button
               onClick={sendtopom}
               className="font-bold text-blue-600 hover:underline mt-2 block"
             >
-              NSFW
+              Google
             </button>
           </div>
         </div>

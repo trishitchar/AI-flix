@@ -7,6 +7,7 @@ import { addGptSearchViewToggle } from '../utils/gptSlice';
 import axios from 'axios';
 import { USER_API_END_POINT } from '../utils/constants';
 import toast from 'react-hot-toast';
+import { removeMovies } from '../utils/moviesSlice';
 
 const Header = () => {
   const navigate = useNavigate();
@@ -32,6 +33,7 @@ const Header = () => {
       if (response.data.success) {
         toast.success(response.data.message);
         dispatch(removeUser());
+        dispatch(removeMovies())
         navigate('/');
       } else {
         console.error('Sign out failed:', response.data.message);

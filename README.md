@@ -80,6 +80,6 @@
     upvote system
     maybe a share button to share over users who joined the site just like I'm sharing my recomendation
     an qr code to share the site quickly 
-    a user can upload a video/youtube url and image poster for a movie or he can request a movie
+    a user can upload a video/youtube url and image poster for a movie or he can request a movie, it will also show in my video tab like something
 
 
