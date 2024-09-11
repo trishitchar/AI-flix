@@ -1,9 +1,7 @@
 const fetchToken = () => {
     useEffect(() => {
-        const token = getCookie('token');
+        const token = localStorage.getItem('token');
         console.log(token);
-        
-        
       }, []);
     
     return (

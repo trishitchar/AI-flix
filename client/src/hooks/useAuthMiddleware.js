@@ -11,14 +11,15 @@ export const useAuthMiddleware = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const token = getCookie('token');
-    // console.log(token);
+    const token = localStorage.getItem('token');
+    console.log(token);
 
-    if (window.location.pathname === '/' && token) {
-      navigate('/browse');
-    } else if (!token && window.location.pathname !== '/') {
-      navigate('/');
-    }
+    // if (window.location.pathname === '/' && token) {
+    //   navigate('/browse');
+    // }
+    //  else if (!token && window.location.pathname !== '/') {
+    //   navigate('/');
+    // }
   }, [navigate]);
 
   return {};
