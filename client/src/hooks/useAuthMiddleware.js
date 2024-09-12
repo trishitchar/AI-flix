@@ -26,7 +26,7 @@ export const useAuthMiddleware = () => {
     //  else if (!token && window.location.pathname !== '/') {
     //   navigate('/');
     // }
-  }, [navigate]);
+  }, []);
 
   return {};
 };
