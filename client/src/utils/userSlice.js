@@ -5,6 +5,7 @@ const userSlice = createSlice({
   initialState: {
     user: null,
     likedVideos: [],
+    token: null
   },
   reducers: {
     addUser: (state, action) => {
@@ -13,6 +14,7 @@ const userSlice = createSlice({
     removeUser: (state) => {
       state.user = null;
       state.likedVideos = [];
+      state.token = null
     },
     addLikedVideo: (state, action) => {
       const newVideo = action.payload;
@@ -24,8 +26,11 @@ const userSlice = createSlice({
       const videoToRemove = action.payload;
       state.likedVideos = state.likedVideos.filter(url => url !== videoToRemove);
     },
+    setToken: (state,action) => {
+      state.token = action.payload
+    }
   },
 });
 
-export const { addUser, removeUser, addLikedVideo, removeLikedVideo } = userSlice.actions;
+export const { addUser, removeUser, addLikedVideo, removeLikedVideo, setToken } = userSlice.actions;
 export default userSlice.reducer;

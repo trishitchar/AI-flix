@@ -8,7 +8,7 @@ import { checkValidDataSignIn, checkValidDataSignUp } from '../utils/validate';
 import axios from 'axios';
 import { USER_API_END_POINT } from '../utils/constants';
 import { useNavigate } from 'react-router-dom';
-import { addUser } from '../utils/userSlice';
+import { addUser, setToken } from '../utils/userSlice';
 import toast from 'react-hot-toast'
 
 const Login = () => {
@@ -50,6 +50,7 @@ const Login = () => {
         toast.success(response.data.message);
         const { user } = response.data;
         dispatch(addUser(user));
+        dispatch(setToken(response.data.token))
         navigate('/browse');
       } else {
         setErrorMessage(response.data.message || 'Sign in failed');
