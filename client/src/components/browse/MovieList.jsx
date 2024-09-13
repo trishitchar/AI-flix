@@ -1,5 +1,5 @@
 import React from 'react'
-import ShimmerUi from './ShimmerUi'
+import ShimmerUi from '../ShimmerUi'
 import { Link } from "react-router-dom";
 import MovieCard from './MovieCard';
 

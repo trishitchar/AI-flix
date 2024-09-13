@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import useGeminiResult from '../hooks/useGeminiSearch';
+import useGeminiResult from '../../hooks/useGeminiSearch';
 // import useTmdbMovieSearch from '../hooks/useTmdbMovieSearch';
 // import GptSearchResults from './GptSearchResults';
 

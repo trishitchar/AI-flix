@@ -1,10 +1,10 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { USER_API_END_POINT } from '../utils/constants';
 import toast from 'react-hot-toast';
-import { addLikedVideo, removeLikedVideo } from '../utils/userSlice';
 import { useNavigate } from 'react-router-dom';
+import { USER_API_END_POINT } from '../../utils/constants';
+import { addLikedVideo, removeLikedVideo } from '../../utils/userSlice';
 
 const MovieStats = () => {
     const info = useSelector((state) => state?.movies?.movieInfo);

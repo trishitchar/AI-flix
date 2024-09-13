@@ -1,7 +1,7 @@
 import React from 'react';
-import MovieList from './MovieList';
 import { useSelector } from 'react-redux';
-import ShimmerUi from './ShimmerUi';
+import ShimmerUi from '../ShimmerUi';
+import MovieList from './MovieList';
 
 const SecondaryContainer = () => {
   const movies = useSelector((store) => store?.movies);

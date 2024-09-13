@@ -1,5 +1,5 @@
 import React from 'react';
-import { IMG_LINK } from '../utils/constants';
+import { IMG_LINK } from '../../utils/constants';
 
 const MovieCard = ({ poster, title }) => {
   if (!poster) return null;

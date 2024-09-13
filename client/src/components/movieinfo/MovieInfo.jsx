@@ -1,8 +1,8 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import useMovieInfo from '../hooks/useMovieInfo';
 import { useSelector } from 'react-redux';
-import VideoBackground from './VideoBackground';
+import useMovieInfo from '../../hooks/useMovieInfo';
+import VideoBackground from '../browse/VideoBackground';
 import MovieStats from './MovieStats';
 
 const MovieInfo = () => {

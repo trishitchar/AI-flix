@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { useSelector } from 'react-redux';
-import Header from './Header';
+import Header from '../common/Header';
 
 const Profile = () => {
     const user = useSelector((store) => store?.user?.user);

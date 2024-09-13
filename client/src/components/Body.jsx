@@ -1,9 +1,9 @@
 import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import Login from './Login';
-import Browse from './Browse';
-import MovieInfo from './MovieInfo';
-import Profile from './Profile';
+import Browse from './browse/Browse';
+import MovieInfo from '../components/movieinfo/MovieInfo';
+import Profile from './profile/Profile';
 import  {useAuthMiddleware}  from '../hooks/useAuthMiddleware';
 
 const Body = () => {

@@ -2,7 +2,7 @@
 
 import React, { useRef, useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import Header from './Header';
+import Header from './common/Header';
 import bg from '../assets/background_flix.jpg';
 import { checkValidDataSignIn, checkValidDataSignUp } from '../utils/validate';
 import axios from 'axios';
