@@ -10,6 +10,13 @@ export const LikedVideo = async (req, res) => {
         });
     }
 
+    if (action !== 'like' && action !== 'dislike') {
+        return res.status(400).json({
+            message: "Invalid action. Must be 'like' or 'dislike'",
+            success: false
+        });
+    }
+
     try {
         const user = await User.findOne({ email });
 
@@ -30,38 +37,25 @@ export const LikedVideo = async (req, res) => {
                     success: false
                 });
             }
-
             user.liked.push(liked);
-            await user.save();
-
-            return res.status(200).json({
-                message: "Video added to liked list",
-                success: true,
-                liked: user.liked
-            });
-
-        } else if (action === 'dislike') {
-            if (!user.liked.includes(liked)) {
+        } else {
+            const index = user.liked.indexOf(liked);
+            if (index === -1) {
                 return res.status(400).json({
                     message: "Video not found in liked list",
                     success: false
                 });
             }
-
-            user.liked = user.liked.filter(v => v !== liked);
-            await user.save();
-
-            return res.status(200).json({
-                message: "Video removed from liked list",
-                success: true,
-                liked: user.liked
-            });
-        } else {
-            return res.status(400).json({
-                message: "Invalid action",
-                success: false
-            });
+            user.liked.splice(index, 1);
         }
+
+        await user.save();
+
+        return res.status(200).json({
+            message: action === 'like' ? "Video added to liked list" : "Video removed from liked list",
+            success: true,
+            liked: user.liked
+        });
 
     } catch (error) {
         console.error("Error in LikedVideo handler:", error);
@@ -71,7 +65,6 @@ export const LikedVideo = async (req, res) => {
         });
     }
 };
-
 
 
 export const RemoveLikedVideo = async (req, res) => {

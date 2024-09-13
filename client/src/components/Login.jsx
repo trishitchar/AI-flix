@@ -4,11 +4,11 @@ import React, { useRef, useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import Header from './common/Header';
 import bg from '../assets/background_flix.jpg';
-import { checkValidDataSignIn, checkValidDataSignUp } from '../utils/validate';
+import { checkValidDataSignIn, checkValidDataSignUp } from '../utils/validate.js';
 import axios from 'axios';
 import { USER_API_END_POINT } from '../utils/constants';
 import { useNavigate } from 'react-router-dom';
-import { addUser, setToken } from '../redux/userSlice';
+import { addLikedVideo, addUser, setToken } from '../redux/userSlice.js';
 import toast from 'react-hot-toast'
 
 const Login = () => {
@@ -51,6 +51,8 @@ const Login = () => {
         const { user } = response.data;
         dispatch(addUser(user));
         dispatch(setToken(response.data.token))
+        console.log(response.data)
+        dispatch(addLikedVideo(response.data?.user?.liked))
         navigate('/browse');
       } else {
         setErrorMessage(response.data.message || 'Sign in failed');

@@ -18,8 +18,18 @@ const userSlice = createSlice({
     },
     addLikedVideo: (state, action) => {
       const newVideo = action.payload;
-      if (!state.likedVideos.includes(newVideo)) {
-        state.likedVideos.push(newVideo);
+      // handle the array when I direct logging in for first time the response give me an object
+      if (Array.isArray(newVideo)) {
+        newVideo.forEach((video) => {
+          if (!state.likedVideos.includes(video)) {
+            state.likedVideos.push(video);
+          }
+        });
+      } else {
+        // Handle single video
+        if (!state.likedVideos.includes(newVideo)) {
+          state.likedVideos.push(newVideo);
+        }
       }
     },
     removeLikedVideo: (state, action) => {
