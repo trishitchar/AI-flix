@@ -9,7 +9,6 @@ router.post("/login", login);
 router.get("/logout", logOut);
 router.post("/likedVideo",LikedVideo);
 router.post("/removeLikedVideo", RemoveLikedVideo);
-router.post("/removeLikedVideo", RemoveLikedVideo);
 router.get("/checkAuth", checkAuth)
 
 export default router;
