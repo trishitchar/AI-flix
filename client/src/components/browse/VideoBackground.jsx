@@ -33,7 +33,7 @@ const VideoBackground = ({ movieId }) => {
             }
             title="YouTube video player"
             frameBorder="0"
-            allow="autoplay; encrypted-media"
+            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
           ></iframe>
         </div>
