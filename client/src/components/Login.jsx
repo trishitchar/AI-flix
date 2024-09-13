@@ -8,7 +8,7 @@ import { checkValidDataSignIn, checkValidDataSignUp } from '../utils/validate';
 import axios from 'axios';
 import { USER_API_END_POINT } from '../utils/constants';
 import { useNavigate } from 'react-router-dom';
-import { addUser, setToken } from '../utils/userSlice';
+import { addUser, setToken } from '../redux/userSlice';
 import toast from 'react-hot-toast'
 
 const Login = () => {

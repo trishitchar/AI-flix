@@ -1,9 +1,9 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import userReducer from './userSlice';
-import movieReducer from "./moviesSlice";
-import gptReducer from "./gptSlice";
+import userReducer from './userSlice.js';
+import movieReducer from "./moviesSlice.js";
+import gptReducer from "./gptSlice.js";
 
 const persistConfig = {
   key: 'root',

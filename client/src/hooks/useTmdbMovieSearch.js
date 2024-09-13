@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { API_OPTIONS } from '../utils/constants';
 import { useDispatch } from 'react-redux';
-import { addGptMovieNameReult, removeGptMovieNameReult } from '../utils/gptSlice';
+import { addGptMovieNameReult, removeGptMovieNameReult } from '../redux/gptSlice';
 
 const useTmdbMovieSearch = (recommendations) => {
   const [movieResults, setMovieResults] = useState([]);

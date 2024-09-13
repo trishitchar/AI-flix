@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom"
-import { addUser, removeUser, setToken } from "./userSlice";
+import { addUser, removeUser, setToken } from "../redux/userSlice";
 import axios from "axios";
 import { USER_API_END_POINT } from "./constants";
 

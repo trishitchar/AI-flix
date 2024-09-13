@@ -2,12 +2,12 @@ import React, { useEffect, useState } from 'react';
 import logo from '../../assets/logo.png';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { removeUser } from '../../utils/userSlice';
-import { addGptSearchViewToggle } from '../../utils/gptSlice';
+import { removeUser } from '../../redux/userSlice';
+import { addGptSearchViewToggle } from '../../redux/gptSlice';
 import axios from 'axios';
 import { USER_API_END_POINT } from '../../utils/constants';
 import toast from 'react-hot-toast';
-import { removeMovies } from '../../utils/moviesSlice';
+import { removeMovies } from '../../redux/moviesSlice';
 
 const Header = () => {
   const navigate = useNavigate();
