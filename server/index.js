@@ -4,6 +4,7 @@ import dbConnection from './utils/db.js';
 import cookieParser from 'cookie-parser';
 import userRoute from './routes/userRoute.js';
 import cors from 'cors';
+import keepAlive from './utils/keepAlive.js';
 
 dotenv.config();
 const app = express();
@@ -68,4 +69,5 @@ app.use((err, req, res, next) => {
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
+  keepAlive();
 });
