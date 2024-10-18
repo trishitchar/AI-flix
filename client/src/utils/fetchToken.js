@@ -1,12 +1,13 @@
-const fetchToken = () => {
-    useEffect(() => {
-        const token = localStorage.getItem('token');
-        console.log(token);
-      }, []);
+// only for testing purpose
+// const fetchToken = () => {
+//     useEffect(() => {
+//         const token = localStorage.getItem('token');
+//         console.log(token);
+//       }, []);
     
-    return (
-    {}
-  )
-}
+//     return (
+//     {}
+//   )
+// }
 
-export default fetchToken;
+// export default fetchToken;

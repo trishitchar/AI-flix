@@ -20,6 +20,4 @@ export const API_OPTIONS = {
   //   ? 'http://localhost:8080/api/user'
   //   : 'https://ai-flix-api.onrender.com/api/user';
 
-  /*
-  
-*/
+
