@@ -10,7 +10,7 @@ export const API_OPTIONS = {
 
   // export const REACT_APP_OPENAI_KEY = "sk-proj-RMoLLhIK50aXyfvFP9BHT3BlbkFJqHRvFfSZZn0qwVHfzILk";
 
-  export const REACT_APP_GEMINI = "AIzaSyC4D2fa6J7dPiF06yA8N2oeZYNECLCMJD0"
+  export const REACT_APP_GEMI_NI = 'AIzaSyCndWWxDbmMg99QowJPxeZDfB8LHWm1y7Y'
 
   // if you're using it on localhost then comment the render url otherwise commment the localhost url
   // export const USER_API_END_POINT = "http://localhost:8080/api/user"

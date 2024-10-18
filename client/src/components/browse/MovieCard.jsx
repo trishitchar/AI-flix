@@ -5,7 +5,7 @@ const MovieCard = ({ poster, title }) => {
   if (!poster) return null;
 
   return (
-    <div className="flex-shrink-0 w-[170px] lg:w-[150px] md:w-[130px] sm:w-[120px] w-[90px] cursor-pointer hover:opacity-90 hover:scale-105">
+    <div className="flex-shrink-0 lg:w-[150px] md:w-[130px] sm:w-[120px] w-[90px] cursor-pointer hover:opacity-90 hover:scale-105">
       <img className="w-full rounded-lg" src={IMG_LINK + poster} alt="Loading.." />
       <span className="text-gray-300 hidden md:block lg:text-xl md:text-sm">
         {title?.length > 18 ? `${title.slice(0, 18)}...` : title}

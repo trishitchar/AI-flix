@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import { REACT_APP_GEMINI } from '../utils/constants';
+import { REACT_APP_GEMI_NI } from '../utils/constants';
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { HarmBlockThreshold, HarmCategory} from "@google/generative-ai";
 import useTmdbMovieSearch from './useTmdbMovieSearch';
-import { useSelector } from 'react-redux';
+// import { useSelector } from 'react-redux';
 
 const useGeminiResult = () => {
   const [error, setError] = useState(null);
@@ -16,7 +16,7 @@ const useGeminiResult = () => {
     setRecommendations('');
 
     try {
-      const genAI = new GoogleGenerativeAI(REACT_APP_GEMINI);
+      const genAI = new GoogleGenerativeAI(REACT_APP_GEMI_NI);
       
       const safetySetting = [
         {
