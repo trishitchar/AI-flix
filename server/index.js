@@ -12,7 +12,7 @@ const app = express();
 dbConnection();
 
 const corsAllowOrigin = {
-  origin: ['http://localhost:5173', 'https://ai-flix.onrender.com', 'https://aiflix-tc.vercel.app'],
+  origin: ['http://localhost:5173', 'https://ai-flix.onrender.com', 'https://aiflix-tc.vercel.app', 'https://aiflix.trishitchar.tech'],
   credentials: true
 };
 app.use(cors(corsAllowOrigin));
