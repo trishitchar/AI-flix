@@ -14,7 +14,8 @@ export const API_OPTIONS = {
 
   // if you're using it on localhost then comment the render url otherwise commment the localhost url
   // export const USER_API_END_POINT = "http://localhost:8080/api/user"
-  export const USER_API_END_POINT = "https://ai-flix-api.onrender.com/api/user"
+  // export const USER_API_END_POINT = "https://ai-flix-api.onrender.com/api/user"
+  export const USER_API_END_POINT = "https://ai-flix-1.onrender.com/api/user"
 
   // export const USER_API_END_POINT = process.env.NODE_ENV === 'development'
   //   ? 'http://localhost:8080/api/user'
