@@ -4,17 +4,27 @@ import dbConnection from './utils/db.js';
 import cookieParser from 'cookie-parser';
 import userRoute from './routes/userRoute.js';
 import cors from 'cors';
-import keepAlive from './utils/keepAlive.js';
+// import keepAlive from './utils/keepAlive.js';
 
 dotenv.config();
 const app = express();
 
 dbConnection();
 
+// const corsAllowOrigin = {
+//   // origin: ['http://localhost:5173', 'https://ai-flix.onrender.com', 'https://aiflix-tc.vercel.app', 'https://aiflix.trishitchar.tech'],
+//   credentials: true
+// };
+// app.use(cors(corsAllowOrigin));
+
+
 const corsAllowOrigin = {
-  // origin: ['http://localhost:5173', 'https://ai-flix.onrender.com', 'https://aiflix-tc.vercel.app', 'https://aiflix.trishitchar.tech'],
-  origin: '*',
-  credentials: true
+  origin: function (origin, callback) {
+    callback(null, true);
+  },
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], 
+  allowedHeaders: ['Content-Type', 'Authorization']
 };
 app.use(cors(corsAllowOrigin));
 
@@ -47,7 +57,7 @@ app.get('/', (req, res) => {
   res.send('Welcome to the Tchar AIFLIX API');
 });
 
-// Error handling
+// Error handling middleware for JSON parsing errors
 app.use((err, req, res, next) => {
   if (err instanceof SyntaxError && err.status === 400 && 'body' in err) {
     console.error('JSON Parsing Error:', err.message);
@@ -57,6 +67,7 @@ app.use((err, req, res, next) => {
   }
 });
 
+// General error handling middleware
 app.use((err, req, res, next) => {
   if (err.type === 'stream.not.readable') {
     console.error('Stream Not Readable Error:', err.message);
@@ -70,5 +81,5 @@ app.use((err, req, res, next) => {
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
-  keepAlive();
+  // keepAlive();
 });
