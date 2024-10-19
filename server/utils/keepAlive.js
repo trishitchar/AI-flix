@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const keepAlive = () => {
-  const url = 'https://ai-flix-api.onrender.com' || 'http://localhost:8080';
+  const url = 'https://ai-flix-api.onrender.com' || 'http://localhost:8080' || 'https://ai-flix-1.onrender.com';
 
   setInterval(async () => {
     try {
