@@ -51,6 +51,8 @@
 ![12 error handle-min](https://github.com/user-attachments/assets/1849663f-950e-4880-8d42-552e7fb5813b)
 13 logout
 ![13 logout-min](https://github.com/user-attachments/assets/3d00c60f-c2ba-4c22-84b6-1f2d7b0ff62c)
+![image](https://github.com/user-attachments/assets/d70ce8d9-6284-4670-95e1-a4ea5424f28d)
+
 
 
 # frontend - cd client 
