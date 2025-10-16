@@ -1,6 +1,4 @@
-"use client";
-
-import React, { useRef, useState, useEffect } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import Header from './common/Header';
 import bg from '../assets/background_flix.jpg';
@@ -17,6 +15,7 @@ const Login = () => {
   const passwordRef = useRef(null);
   const [isSignUp, setIsSignUp] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
+  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -39,6 +38,10 @@ const Login = () => {
         return;
     }
 
+    setErrorMessage(null);
+    setLoading(true);
+    const toastId = toast.loading('Signing in...');
+
     try {
       const response = await axios.post(`${USER_API_END_POINT}/login`, { email, password }, {
         headers: {
@@ -47,20 +50,22 @@ const Login = () => {
         withCredentials: true
       });
       if (response.data.success) {
-        toast.success(response.data.message);
+        toast.success(response.data.message, { id: toastId });
         const { user } = response.data;
         dispatch(addUser(user));
-        dispatch(setToken(response.data.token))
-        console.log(response.data)
-        dispatch(addLikedVideo(response.data?.user?.liked))
+        dispatch(setToken(response.data.token));
+        dispatch(addLikedVideo(response.data?.user?.liked));
         navigate('/browse');
       } else {
+        toast.error(response.data.message || 'Sign in failed', { id: toastId });
         setErrorMessage(response.data.message || 'Sign in failed');
       }
     } catch (error) {
-      toast.error(error.message);
+      toast.error(error.message || 'An error occurred', { id: toastId });
       setErrorMessage(`Error: ${error.message}`);
       console.error(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -77,6 +82,10 @@ const Login = () => {
         return;
     }
 
+    setErrorMessage(null);
+    setLoading(true);
+    const toastId = toast.loading('It can take some time as I am using free hosting...');
+
     try {
         const response = await axios.post(`${USER_API_END_POINT}/signup`, { name, email, password }, {
             headers: {
@@ -85,14 +94,18 @@ const Login = () => {
             withCredentials: true
         });
         if (response.data.success) {
-            toast.success(response.data.message);
+            toast.success(response.data.message, { id: toastId });
             toggleSignUp();
         } else {
+            toast.error(response.data.message || 'Sign up failed', { id: toastId });
             setErrorMessage(response.data.message || 'Sign up failed');
         }
     } catch (error) {
+        toast.error(error.message || 'An error occurred', { id: toastId });
         setErrorMessage(`Error: ${error.message}`);
         console.error(error);
+    } finally {
+        setLoading(false);
     }
   };
 
@@ -112,6 +125,7 @@ const Login = () => {
               placeholder='Enter your name'
               className='p-2 m-2 border border-gray-300 rounded-lg outline-none w-80'
               required
+              disabled={loading}
             />
           )}
           <input
@@ -120,6 +134,7 @@ const Login = () => {
             placeholder='Enter your email'
             className='p-2 m-2 border border-gray-300 rounded-lg outline-none w-80'
             required
+            disabled={loading}
           />
           <input
             type='password'
@@ -127,17 +142,20 @@ const Login = () => {
             placeholder='Enter your password'
             className='p-2 m-2 border border-gray-300 rounded-lg outline-none w-80'
             required
+            disabled={loading}
           />
           <button
             type='submit'
-            className='bg-red-600 text-white m-2 p-2 rounded-md shadow-md w-80 hover:bg-red-700 focus:outline-none'
+            className={`bg-red-600 text-white m-2 p-2 rounded-md shadow-md w-80 hover:bg-red-700 focus:outline-none ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
+            disabled={loading}
           >
-            {isSignUp ? 'Sign Up' : 'Sign In'}
+            {isSignUp ? (loading ? 'Signing up...' : 'Sign Up') : (loading ? 'Signing in...' : 'Sign In')}
           </button>
           <button
             type='button'
             onClick={toggleSignUp}
             className='text-blue-500 hover:underline mt-2'
+            disabled={loading}
           >
             {isSignUp ? 'Already have an account? Sign In' : "Don't have an account? Sign Up"}
           </button>
