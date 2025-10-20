@@ -24,7 +24,7 @@ const useGeminiResult = () => {
           threshold: HarmBlockThreshold.BLOCK_NONE,
         },
       ];
-      const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" , safetySetting});
+      const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash-exp" , safetySetting});
 
       const prompt = `Act as a movie recommendation system and suggest some movies for the query "${query}". Only give me names of 5 movies, comma-separated like the example result given ahead. Example Result: Hera Pheri, 3 Idiots, Hulk, Dunki, Red`;
 
